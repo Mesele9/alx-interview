@@ -1,9 +1,14 @@
 #!/usr/bin/python3
+"""
+lockboxes unlock method
+"""
 
 
 def canUnlockAll(boxes):
     """
     a method that determines if all the boxes can be opened
+    :param: boxes lists of boxes
+    :return: True if all boxes can be opened else return False
     """
     keys = [0]
 
