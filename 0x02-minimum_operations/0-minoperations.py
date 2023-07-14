@@ -20,4 +20,3 @@ def minOperations(n):
         counter += 1
 
     return counter
-
