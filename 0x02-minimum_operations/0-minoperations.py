@@ -3,6 +3,8 @@
 
 
 def minOperations(n):
+    """a method that calculates the fewest number of operations needed
+    to result in exactly n H characters in the file. """
     counter = 0
     copychar = 1
     charH = 1
