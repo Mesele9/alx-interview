@@ -15,18 +15,17 @@ def main():
 
     try:
         for line_num, line in enumerate(sys.stdin, 1):
-            parts = line.split()
-            if len(parts) < 9:
-                continue
-
-            try:
+            parts = line.strip().split()
+            if len(parts) == 9 and parts[-2].isdigit():
                 file_size = int(parts[-1])
                 status_code = int(parts[-2])
-            except ValueError:
-                continue
 
             total_size += file_size
-            status_codes[status_code] = status_codes.get(status_code, 0) + 1
+
+            if status_code in status_codes:
+                status_codes[status_code] += 1
+            else:
+                status_codes[status_code] = 1
 
             if line_num % 10 == 0:
                 print_stats(total_size, status_codes)
