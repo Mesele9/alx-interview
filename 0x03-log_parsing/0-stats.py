@@ -8,6 +8,7 @@ def print_stats(total_size, status_codes):
     for status_code, count in sorted(status_codes.items()):
         print("{}: {}".format(status_code, count))
 
+
 def main():
     total_size = 0
     status_codes = {}
@@ -29,8 +30,6 @@ def main():
 
             if line_num % 10 == 0:
                 print_stats(total_size, status_codes)
-                print()
-                sys.stdout.flush()
 
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
