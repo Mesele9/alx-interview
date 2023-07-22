@@ -4,12 +4,14 @@ import sys
 
 
 def print_stats(total_size, status_codes):
+    """ function for printing """
     print("File size:", total_size)
     for status_code, count in sorted(status_codes.items()):
         print("{}: {}".format(status_code, count))
 
 
 def main():
+    """ main function """
     total_size = 0
     status_codes = {}
 
@@ -42,3 +44,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
