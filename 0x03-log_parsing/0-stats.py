@@ -14,21 +14,26 @@ def main():
     status_codes = {}
 
     try:
+        file_size = 0
+        status_code = 0
+
         for line_num, line in enumerate(sys.stdin, 1):
             parts = line.strip().split()
             if len(parts) == 9 and parts[-2].isdigit():
                 file_size = int(parts[-1])
                 status_code = int(parts[-2])
 
-                total_size += file_size
+            total_size += file_size
 
-                if status_code in status_codes:
-                    status_codes[status_code] += 1
-                else:
-                    status_codes[status_code] = 1
+            if status_code in status_codes:
+                status_codes[status_code] += 1
+            else:
+                status_codes[status_code] = 1
 
-                if line_num % 10 == 0:
-                    print_stats(total_size, status_codes)
+            if line_num % 10 == 0:
+                print_stats(total_size, status_codes)
+
+        print_stats(total_size, status_codes)
 
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
