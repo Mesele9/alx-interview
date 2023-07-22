@@ -3,36 +3,37 @@
 import sys
 
 
-def print_stats(total_size, status_codes):
-    print("File size:", total_size)
-    for status_code, count in sorted(status_codes.items()):
-        print("{}: {}".format(status_code, count))
+def print_stats(lines, total_file_size, status_codes):
+    print("File size:", total_file_size)
+    for status_code in sorted(status_codes):
+        if status_codes[status_code] > 0:
+            print("{}: {}".format(status_code, status_codes[status_code])
 
 
 def main():
-    total_size = 0
-    status_codes = {}
+    total_file_size = 0
+    status_codes = {200: 0, 301: 0, 400: 0, 401: 0,
+                    403: 0, 404: 0, 405: 0, 500: 0}
+    lines = []
 
     try:
-        for line_num, line in enumerate(sys.stdin, 1):
+        for line in sys.stdin:
             parts = line.strip().split()
-            if len(parts) == 9 and parts[-2].isdigit():
-                file_size = int(parts[-1])
-                status_code = int(parts[-2])
+            if len(parts) != 9:
+                continue
 
-            total_size += file_size
+            status_code, file_size = int(parts[-2]), int(parts[-1])
+            total_file_size += file_size
+            status_codes[status_code] += 1
+            lines.append(line)
 
-            if status_code in status_codes:
-                status_codes[status_code] += 1
-            else:
-                status_codes[status_code] = 1
-
-            if line_num % 10 == 0:
-                print_stats(total_size, status_codes)
+            if len(lines) == 10:
+                print_stats(lines, total_file_size, status_codes)
+                lines = []
 
     except KeyboardInterrupt:
-        print_stats(total_size, status_codes)
-        sys.exit(0)
+        print_stats(lines, total_file_size, status_codes)
+
 
 if __name__ == "__main__":
     main()
