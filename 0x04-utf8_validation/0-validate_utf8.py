@@ -7,6 +7,7 @@ def validUTF8(data):
     encoding
     """
     def countLeadingOnes(byte):
+        """ helper function """
         mask = 1 << 7
         count = 0
         while byte & mask:
@@ -35,4 +36,3 @@ def validUTF8(data):
             i += length
 
     return True
-
