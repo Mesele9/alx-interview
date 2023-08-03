@@ -63,4 +63,3 @@ if __name__ == "__main__":
 
     N = sys.argv[1]
     solve_nqueens(N)
-
