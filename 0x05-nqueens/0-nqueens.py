@@ -39,7 +39,7 @@ def solve_nqueens_util(board, row, N, solutions):
 
 
 def solve_nqueens(N):
-    """ a fcntion for solve the N queen problem """
+    """ a function for solve the N queen problem """
     if not N.isdigit():
         print("N must be a number")
         sys.exit(1)
@@ -63,3 +63,4 @@ if __name__ == "__main__":
 
     N = sys.argv[1]
     solve_nqueens(N)
+
