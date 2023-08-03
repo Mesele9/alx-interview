@@ -2,7 +2,9 @@
 """ 0-nqueens.py """
 import sys
 
+
 def is_safe(board, row, col, N):
+    """ a function for checking the presence of queen """
     # check for queen in the same column
     for i in range(row):
         if board[i][col] == 1:
@@ -20,9 +22,12 @@ def is_safe(board, row, col, N):
 
     return True
 
+
 def solve_nqueens_util(board, row, N, solutions):
+    """ helper function """
     if row == N:
-        solution = [[i, j] for i in range(N) for j in range(N) if board[i][j] == 1]
+        solution = [[i, j] for i in range(N)
+                    for j in range(N) if board[i][j] == 1]
         solutions.append(solution)
         return
 
@@ -32,7 +37,9 @@ def solve_nqueens_util(board, row, N, solutions):
             solve_nqueens_util(board, row + 1, N, solutions)
             board[row][col] = 0
 
+
 def solve_nqueens(N):
+    """ a fcntion for solve the N queen problem """
     if not N.isdigit():
         print("N must be a number")
         sys.exit(1)
