@@ -11,16 +11,27 @@ request(url, (error, response, body) => {
     const film = JSON.parse(body);
     const character = film.characters;
 
-    // Fetch all characters
-    character.forEach((characterUrl) => {
-      request(characterUrl, (characterError, characterResponse, characterBody) => {
-        if (characterError) {
-          console.error(characterError);
-        } else {
-          const characterData = JSON.parse(characterBody);
-          console.log(characterData.name);
-        }
-      });
-    });
+    // Fetch character names using their individual URLs and create an array of promises
+    fetchAndPrint(character);
   }
 });
+
+function fetchAndPrint (characterUrls) {
+  let count = 0;
+
+  characterUrls.forEach(characterUrl => {
+    request(characterUrl, (characterError, characterResponse, characterBody) => {
+      if (characterError) {
+        console.error(characterError);
+      } else {
+        const characterData = JSON.parse(characterBody);
+        console.log(characterData.name);
+
+        count++;
+        if (count === characterUrls.length) {
+          process.exit(0);
+        }
+      }
+    });
+  });
+}
