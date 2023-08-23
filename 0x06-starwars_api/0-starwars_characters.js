@@ -5,34 +5,29 @@ const request = require('request');
 const id = process.argv[2];
 const url = `https://swapi-api.alx-tools.com/api/films/${id}/`;
 
+function fetchAndPrint (characterUrls, index) {
+  if (characterUrls.length === index) {
+    return;
+  }
+
+  request(characterUrls[index], (error, response, body) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(JSON.parse(body).name);
+      fetchAndPrint(characterUrls, index + 1);
+    }
+  });
+}
+
 request(url, (error, response, body) => {
   if (error) {
     console.error(error);
   } else {
     const film = JSON.parse(body);
-    const character = film.characters;
+    const characterUrls = film.characters;
 
     // Fetch character names using their individual URLs and create an array of promises
-    fetchAndPrint(character);
+    fetchAndPrint(characterUrls, 0);
   }
 });
-
-function fetchAndPrint (characterUrls) {
-  let count = 0;
-
-  characterUrls.forEach(characterUrl => {
-    request(characterUrl, (characterError, characterResponse, characterBody) => {
-      if (characterError) {
-        console.error(characterError);
-      } else {
-        const characterData = JSON.parse(characterBody);
-        console.log(characterData.name);
-
-        count++;
-        if (count === characterUrls.length) {
-          process.exit(0);
-        }
-      }
-    });
-  });
-}
