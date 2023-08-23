@@ -8,6 +8,8 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
+    coins.sort(reverse=True)
+
     min_coins = [float('inf')] * (total + 1)
     min_coins[0] = 0
 
