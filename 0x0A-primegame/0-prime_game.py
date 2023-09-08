@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ 0-prime_game.py """
 
+
 def is_prime(num):
     """ check for prime number"""
     if num < 2:
@@ -9,6 +10,7 @@ def is_prime(num):
         if num % i == 0:
             return False
     return True
+
 
 def isWinner(x, nums):
     """ returns the winner """
