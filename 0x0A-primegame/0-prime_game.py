@@ -13,22 +13,47 @@ def is_prime(num):
         return True
 
 
+def is_round_winner(n, x):
+    """ checks the round winner """
+    list = [i for i in range(1, n + 1)]
+    players = ['Maria', 'Ben']
+
+    for i in range(n):
+        current_player = players[i % 2]
+        nums_selected = []
+        prime = -1
+        for idx, num in enumerate(list):
+            if prime != -1:
+                if num % prime == 0:
+                    nums_selected.append(idx)
+            else:
+                if is_prime(num):
+                    nums_selected.append(idx)
+                    prime = num
+
+        if prime == -1:
+            if current_player == players[0]:
+                return players[1]
+            else:
+                return players[0]
+        else:
+            for i, val in enumerate(nums_selected):
+                del list[val - i]
+    return None
+
+
 def isWinner(x, nums):
     """ returns the winner """
-    maria_wins = 0
-    ben_wins = 0
+    counter = {'Maria': 0, 'Ben': 0}
 
-    for n in nums:
-        prime_count = sum(1 for i in range(1, n + 1) if is_prime(i))
+    for i in range(x):
+        round_winner = is_round_winner(nums[i], x)
+        if round_winner is not None:
+            counter[round_winner] += 1
 
-        if prime_count % 2 == 0:
-            ben_wins += 1
-        else:
-            maria_wins += 1
-
-    if maria_wins > ben_wins:
+    if counter['Maria'] > counter['Ben']:
         return 'Maria'
-    elif ben_wins > maria_wins:
+    elif counter['Ben'] > counter['Maria']:
         return 'Ben'
     else:
         return None
